@@ -17,7 +17,6 @@ public class BulletPool {
         bulletlist = new ArrayList<>();
         for (int i = 0; i <= PoolSize; i++) {
             bulletlist.add(new Bullet(0, 0, 0, 0));
-            System.out.println(bulletlist);
 
         }
     }
@@ -27,19 +26,22 @@ public class BulletPool {
             instance = new BulletPool();
             return instance;
         }
-        return  instance;
+        return instance;
     }
 
-    public Bullet getAvailableBulletWithDirection(int x, int y, int dx, int dy) {
+    public Bullet retrieveBulletAndDirection(int x, int y, int dx, int dy) {
         if (bulletlist.size() == 0) {
             for (int i = 0; i < 10; i++) {
                 bulletlist.add(new Bullet(0, 0, 0, 0));
             }
         }
         Bullet bullet = bulletlist.remove(0);
+        bullet.setX_Y(x, y);
+        bullet.setDx_Dy(dx, dy);
         return bullet;
     }
 
-    public void collectBullet(Bullet bullet) {
+    public void collectReusedBullet(Bullet bullet) {
         bulletlist.add(bullet);
     }
+}
