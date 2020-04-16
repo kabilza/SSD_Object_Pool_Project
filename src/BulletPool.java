@@ -1,14 +1,24 @@
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 
 public class BulletPool {
 
     private static BulletPool instance;
-    private static ArrayList<Bullet> bullets;
+
+    private List<Bullet> bulletlist;
+
+    private int PoolSize = 8;
 
     private BulletPool() {
-        bullets = new ArrayList<Bullet>();
-        for (int i = 0; i < 10; i++) {
-            bullets.add(new Bullet(0, 0, 0, 0));
+        bulletlist = new ArrayList<>();
+        for (int i = 0; i <= PoolSize; i++) {
+            bulletlist.add(new Bullet(0, 0, 0, 0));
+            System.out.println(bulletlist);
+
         }
     }
 
@@ -17,24 +27,19 @@ public class BulletPool {
             instance = new BulletPool();
             return instance;
         }
-        else {
-            return instance;
-        }
+        return  instance;
     }
 
     public Bullet getAvailableBulletWithDirection(int x, int y, int dx, int dy) {
-        if (bullets.size() == 0) {
+        if (bulletlist.size() == 0) {
             for (int i = 0; i < 10; i++) {
-                bullets.add(new Bullet(0, 0, 0, 0));
+                bulletlist.add(new Bullet(0, 0, 0, 0));
             }
         }
-        Bullet bullet = bullets.remove(-1);
+        Bullet bullet = bulletlist.remove(0);
         return bullet;
     }
 
     public void collectBullet(Bullet bullet) {
-        bullets.add(bullet);
-        System.out.println(bullets);
+        bulletlist.add(bullet);
     }
-
-}
