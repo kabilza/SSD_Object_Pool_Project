@@ -4,6 +4,7 @@ import java.util.Observable;
 
 public class Game extends Observable {
 
+    private BulletPool bulletPool = BulletPool.getInstance();
     private int width = 600;
     private int height = 600;
 
@@ -55,6 +56,7 @@ public class Game extends Observable {
         }
         for(Bullet bullet : toRemove) {
             bullets.remove(bullet);
+            bulletPool.collectBullet(bullet);
         }
     }
 
